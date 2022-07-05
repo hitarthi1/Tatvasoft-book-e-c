@@ -44,11 +44,11 @@ const Category = () => {
   }, [filters]);
 
   const searchAllCategories = () => {
-    // categoryService.getAll(filters).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setCategoryRecords(res.data);
-    //   }
-    // });
+    categoryService.getAll(filters).then((res) => {
+      if (res ) {
+        setCategoryRecords(res);
+      }
+    });
   };
 
   const columns = [
@@ -57,13 +57,13 @@ const Category = () => {
   ];
 
   const onConfirmDelete = () => {
-    // categoryService.delete(selectedId).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     toast.success(res.message);
-    //     setOpen(false);
-    //     setFilters({ ...filters, page: 1 });
-    //   }
-    // });
+    categoryService.delete(selectedId).then((res) => {
+      if (res ) {
+        toast.success(res.message);
+        setOpen(false);
+        setFilters({ ...filters, page: 1 });
+      }
+    });
   };
   return (
     <div className={classes.productWrapper}>

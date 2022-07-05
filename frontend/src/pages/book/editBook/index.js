@@ -39,12 +39,13 @@ const EditBook = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    // if (id) getBookById();
-    // categoryService.getAllOptions().then((res) => {
-    //   if (res.code === StatusCode.Success) {
-    //     setCategories(res.data);
-    //   }
-    // });
+    if (id) getBookById();
+    categoryService.getAllOptions().then((res) => {
+      if (res) {
+        setCategories(res);
+      }
+      console.log(res);
+    });
   }, [id]);
 
   const validationSchema = Yup.object().shape({
@@ -58,27 +59,27 @@ const EditBook = () => {
   });
 
   const getBookById = () => {
-    // bookService.getById(Number(id)).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setInitialValueState({
-    //       id: res.data.id,
-    //       name: res.data.name,
-    //       price: res.data.price,
-    //       category: res.data.categoryId,
-    //       description: res.data.description,
-    //       imageSrc: res.data.base64image,
-    //     });
-    //   }
-    // });
+    bookService.getById(Number(id)).then((res) => {
+      if (res && res) {
+        setInitialValueState({
+          id: res[0].id,
+          name: res[0].name,
+          price: res[0].price,
+          category: res[0].categoryId,
+          description: res[0].description,
+          imageSrc: res[0].base64image,
+        });
+      }
+    });
   };
 
   const onSubmit = (values) => {
-    // bookService.save(values).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     toast.success(res.message);
-    //     history.push("/book");
-    //   }
-    // });
+    bookService.save(values).then((res) => {
+      if (res ) {
+        toast.success(res.message);
+        history.push("/book");
+      }
+    });
   };
 
   const onSelectFile = (e, setFieldValue, setFieldError) => {
@@ -175,8 +176,8 @@ const EditBook = () => {
                       value={values.category}
                     >
                       {categories?.map((rl) => (
-                        <MenuItem value={rl.value} key={"category" + rl.value}>
-                          {rl.label}
+                        <MenuItem value={rl.id} key={"category" + rl.id}>
+                          {rl.name}
                         </MenuItem>
                       ))}
                     </Select>
@@ -186,7 +187,7 @@ const EditBook = () => {
                     touched={touched.category}
                   />
                 </div>
-                {/* <img src={values.imageSrc} alt="asa" /> */}
+                <img src={values.imageSrc} alt="asa" />
                 <div className="form-col">
                   {!values.imageSrc && (
                     <>

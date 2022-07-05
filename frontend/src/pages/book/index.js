@@ -24,7 +24,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { Button } from "@material-ui/core";
 import bookService from "../../service/book/book.service";
 // import { IListBook } from "../../service/book/book.model";
-//import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Book = () => {
   const classes = productStyle();
@@ -34,20 +34,21 @@ const Book = () => {
   const [selectedId, setSelectedId] = React.useState(0);
 
   const history = useHistory();
-  useEffect(() => {
-    searchAllBooks();
-  }, []);
-
   // useEffect(() => {
   //   searchAllBooks();
-  // }, [filters]);
+  // }, []);
+
+  useEffect(() => {
+    searchAllBooks();
+  }, [filters]);
 
   const searchAllBooks = () => {
-    // bookService.getAll(filters).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setBookRecords(res.data);
-    //   }
-    // });
+     bookService.getAll(filters).then((res) => {
+       if (res ) {
+       setBookRecords(res);
+       console.log(res);
+      }
+    });
   };
 
   const columns = [
@@ -58,13 +59,13 @@ const Book = () => {
   ];
 
   const onConfirmDelete = () => {
-    // bookService.delete(selectedId).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     toast.success(res.message);
-    //     setOpen(false);
-    //     setFilters({ ...filters, page: 1 });
-    //   }
-    // });
+    bookService.delete(selectedId).then((res) => {
+      if (res) {
+        toast.success(res.message);
+        setOpen(false);
+        setFilters({ ...filters, page: 1 });
+      }
+    });
   };
   return (
     <div className={classes.productWrapper}>
@@ -113,7 +114,7 @@ const Book = () => {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{row.name}</TableCell>
                   <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.category}</TableCell>
+                  <TableCell>{row.categoryid}</TableCell>
                   <TableCell>
                     <Button
                       type="button"
@@ -146,6 +147,8 @@ const Book = () => {
             </TableBody>
           </Table>
         </TableContainer>
+       
+       
         <TablePagination
          rowsPerPageOptions={RecordsPerPage}
           component="div"
@@ -159,6 +162,7 @@ const Book = () => {
             setFilters({ ...filters, page: 1, pageSize: +e.target.value });
           }}
         />
+
         <Dialog
           open={open}
           onClose={() => setOpen(false)}
@@ -191,6 +195,7 @@ const Book = () => {
             </Button>
           </DialogActions>
         </Dialog>
+
       </div>
     </div>
   );

@@ -36,12 +36,16 @@ const Login= () => {
   });
 
   const onSubmit = (values) => {
-    // authService.login(values).then((res) => {
-    //   if (res.code === StatusCode.Success) {
-    //     history.push("/");
-    //     toast.success(res.message);
-    //   }
-    // });
+    authService.login(values).then((res) => {
+      console.log({ res});
+      console.log(res.status);
+
+
+      if (res.status === "authorized") {
+        history.push("/");
+        toast.success(res.message);
+      }
+    });
   };
   return (
     <div className={classes.loginWrapper}>
@@ -57,11 +61,12 @@ const Login= () => {
             </Link>
             <Typography color="textPrimary">Login</Typography>
           </Breadcrumbs>
-          <Typography variant="h1">Login or Create an Account</Typography>
+          <div  className="lcentre"><Typography variant="h4" >Login or Create an Account</Typography></div>
+          
           <div className="login-row">
             <div className="content-col">
               <div className="top-content">
-                <Typography variant="h2">New Customer</Typography>
+                <Typography variant="h5">New Customer</Typography>
                 <p>Registration is free and easy.</p>
                 <List className="bullet-list">
                   <ListItem>Faster checkout</ListItem>
@@ -84,7 +89,7 @@ const Login= () => {
               </div>
             </div>
             <div className="form-block">
-              <Typography variant="h2">Registered Customers</Typography>
+              <Typography variant="5">Registered Customers</Typography>
               <p>If you have an account with us, please log in.</p>
               <Formik
                 initialValues={initialValues}

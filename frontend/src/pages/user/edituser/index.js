@@ -28,7 +28,7 @@ const EditUser = () => {
   const history = useHistory();
   const initialValues= {
     id: 0,
-    email: "",
+    email: "@gmail.com",
     lastName: "",
     firstName: "",
     roleId: 3,
@@ -54,40 +54,47 @@ const EditUser = () => {
   });
 
   const getRoles = () => {
-    // userService.getAllUserRoles().then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setRoles(res.data);
-    //   }
-    // });
+    userService.getAllUserRoles().then((res) => {
+      if (res ) {
+        console.log({res});
+        setRoles(res);
+      }
+    });
   };
 
   const getUserById = () => {
-    // userService.getById(Number(id)).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setInitialValueState({
-    //       id: res.data.id,
-    //       email: res.data.email,
-    //       lastName: res.data.lastName,
-    //       firstName: res.data.firstName,
-    //       roleId: res.data.roleId,
-    //     });
-    //   }
-    // });
+    userService.getById(Number(id)).then((res) => {
+      if (res ) {
+        setInitialValueState({
+          id: res[0].id,
+          email: res[0].email,
+          lastName: res[0].lastname,
+          firstName: res[0].firstname,
+          roleId: res[0].roleId,
+        });
+
+
+
+        console.log(res[0].email);
+      }
+    });
   };
 
   const onSubmit = (values) => {
-    // userService.update(values).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     toast.success(res.message);
-    //     history.push("/user");
-    //   }
-    // });
+    userService.update(values).then((res) => {
+      console.log(values);
+      if (res ) {
+        toast.success(res.message);
+        history.push("/user");
+      }
+    });
   };
   return (
     <div className={classes.editUserWrapper}>
       <div className="container">
         <Typography variant="h1">Edit User</Typography>
         <Formik
+      
           initialValues={initialValueState}
           validationSchema={validationSchema}
           enableReinitialize={true}
@@ -165,8 +172,8 @@ const EditUser = () => {
                       value={values.roleId}
                     >
                       {roles?.map((rl) => (
-                        <MenuItem value={rl.value} key={"role" + rl.value}>
-                          {rl.label}
+                        <MenuItem value={rl.id} key={"role" + rl.id}>
+                          {rl.id}
                         </MenuItem>
                       ))}
                     </Select>
@@ -180,6 +187,7 @@ const EditUser = () => {
                   type="submit"
                   color="primary"
                   disableElevation
+                
                 >
                   Save
                 </Button>

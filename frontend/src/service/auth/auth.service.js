@@ -7,6 +7,7 @@ class AuthService {
     async login(data) {
         const url = `${this.ENDPOINT}/Login`;
         return request({ url, method: 'POST', data }).then((res) => {
+            console.log(res.data);
             return res.data;
         });
     }
@@ -14,22 +15,7 @@ class AuthService {
     async create(data) {
         const url = `${this.ENDPOINT}/RegisterUser`;
 
-        // const result = await fetch("http://localhost:5000/api/BookStore/RegisterUser", {
-        //     method: "post",
-        //     body: JSON.stringify({
-        //       patientName,
-        //       doctorName,
-        //       number,
-        //       appointmentDate,
-        //       proof,
-        //       identitynumber,
-        //       slot,
-        //     })
-        //   });
-
-
-
-        return request({ url, method: 'POST', data }).then((res) => {
+        return request({ url, method: 'GET', data }).then((res) => {
             return res.data;
         });
     }

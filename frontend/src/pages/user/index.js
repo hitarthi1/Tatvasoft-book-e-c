@@ -30,7 +30,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { Button, Checkbox } from "@material-ui/core";
 import userService from "../../service/user/user.service";
 //import { IListUser } from "../../service/user/user.model";
-//import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function User () {
   const classes = productStyle();
@@ -40,20 +40,19 @@ function User () {
   const [selectedId, setSelectedId] = React.useState(0);
 
   const history = useHistory();
-  useEffect(() => {
-    searchAllUsers();
-  }, []);
+ 
 
   useEffect(() => {
     searchAllUsers();
   }, [filters]);
 
   const searchAllUsers = () => {
-    // userService.getAllUsers(filters).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setUserRecords(res.data);
-    //   }
-    // });
+    userService.getAllUsers(filters).then((res) => {
+      if (res) {
+        console.log(res);
+        setUserRecords(res);
+      }
+    });
   };
 
   const columns = [
@@ -73,13 +72,13 @@ function User () {
   ];
 
   const onConfirmDelete = () => {
-    // userService.delete(selectedId).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     toast.success(res.message);
-    //     setOpen(false);
-    //     setFilters({ ...filters, page: 1 });
-    //   }
-    // });
+    userService.delete(selectedId).then((res) => {
+      if (res ) {
+        toast.success(res.message);
+        setOpen(false);
+        setFilters({ ...filters, page: 1 });
+      }
+    });
 
 
   };

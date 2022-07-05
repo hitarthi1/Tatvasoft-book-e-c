@@ -3,7 +3,7 @@ import { StatusCode } from '../constant/constant';
 import { toast } from 'react-toastify';
 
 const request = axios.create({
-  baseURL: 'https://localhost:5000/', // url = base url + request url
+  baseURL: 'http://localhost:5000/', // url = base url + request url
   timeout: 12400000,
   responseType: 'json',
 });

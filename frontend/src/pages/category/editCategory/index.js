@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { useHistory, useParams } from "react-router-dom";
 import categoryService from "../../../service/category/category.service";
-//import { StatusCode } from "../../../constant/constant";
+import { StatusCode } from "../../../constant/constant";
 import { Formik } from "formik";
 //import { IAddOrEditCategory } from "../../../service/category/category.model";
 import ValidationErrorMessage from "../../../components/ValidationErrorMessage/ValidationErrorMessage";
@@ -40,23 +40,25 @@ const EditCategory = () => {
   });
 
   const getCategoryById = () => {
-    // categoryService.getById(Number(id)).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setInitialValueState({
-    //       id: res.data.id,
-    //       name: res.data.name,
-    //     });
-    //   }
-    // });
+    categoryService.getById(Number(id)).then((res) => {
+      if (res) {
+        setInitialValueState({
+          id: id,
+          name: res[0].name,
+        });
+        console.log(id,"asdfghjkl");
+      }
+    });
   };
 
   const onSubmit = (values) => {
-    // categoryService.save(values).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     toast.success(res.message);
-    //     history.push("/category");
-    //   }
-    // });
+    categoryService.save(values).then((res) => {
+      if (res ) {
+        toast.success(res.message);
+        history.push("/category");
+      }
+    });
+    console.log(values);
   };
   return (
     <div className={classes.editWrapper}>

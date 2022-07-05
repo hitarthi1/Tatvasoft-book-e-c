@@ -29,11 +29,11 @@ const BookList= () => {
   }, [filters]);
 
   const searchAllBooks = () => {
-    // bookService.getAll(filters).then((res) => {
-    //   if (res && res.code === StatusCode.Success) {
-    //     setBookRecords(res.data);
-    //   }
-    // });
+    bookService.getAll(filters).then((res) => {
+      if (res ) {
+        setBookRecords(res);
+      }
+    });
   };
 
   return (

@@ -49,6 +49,7 @@ const loginStyle = makeStyles((theme) => ({
             },
           },
         },
+
         "& .form-block": {
           maxWidth: "50%",
           flex: "0 0 50%",
@@ -88,6 +89,14 @@ const loginStyle = makeStyles((theme) => ({
           },
         },
       },
+
+      "& .lcentre": {
+        maxWidth: "600px",
+       margin:"auto",
+       paddingBottom:"20px"
+      },
+
+
     },
   },
 }));

@@ -59,27 +59,16 @@ const Register = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
-    //  body:`$(data)`
-   //  body:JSON.stringify(data)
-     
-//       body:JSON.stringify({
-//        firstName: data.firstName,
-// email: data.email,
-// lastName: data.lastName,
-// password: data.password,
-// roleId: 1
+      body:JSON.stringify({
+       firstName: data.firstName,
+email: data.email,
+lastName: data.lastName,
+password: data.password,
+roleId: 1
 
-//       }),
+      }),
     });
   }
-
-
-
-
-
-
-  
   return (
     <div className={classes.createAccountWrapper}>
       <div className="create-account-page-wrapper">
