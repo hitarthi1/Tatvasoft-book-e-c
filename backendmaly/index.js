@@ -41,7 +41,7 @@ app.post('/api/BookStore/Login', async (req, res)=>{
    // console.log(ret);
    if(ret.rowCount==1){
    // res.send(ret);
-res.status(200).json({ status: 'authorized' });;
+    res.status(200).json({ status: 'authorized',re:ret });;
    }
 })
  
@@ -68,14 +68,24 @@ res.send("jddjhgjdr");
 app.get('/book/Search', async (req, res)=>{
    // const  name=req.body.name;
    
-// const name = req.query;
-
+const keyword= req.query.keyword;
+const query= req.query;
+console.log({query})
   //  const ret =await pool.query(`SELECT * FROM "book" WHERE name=$1 ;`,[name]);
-    const ret =await pool.query(`SELECT * FROM "book" LEFT JOIN  "category" ON book.categoryid = category.id ;`);
+  //  if(keyword !='' || keyword!=undefined){
+    if(keyword !=''){
+  
+      const ret =await pool.query(`SELECT *,category.name AS cat ,book.name AS bookname FROM "book" LEFT JOIN  "category" ON book.categoryid = category.id WHERE book.id IN (SELECT id from book WHERE name LIKE '%'||$1||'%' ) ;`,[keyword]);
+      res.send(ret.rows);
+    }else{
+      const ret =await pool.query(`SELECT *,category.name AS cat ,book.name AS bookname FROM "book" LEFT JOIN  "category" ON book.categoryid = category.id ;`);
+      res.send(ret.rows);
     
+    }
 
+    
     // console.log("asdfghjkl;",ret.rows);
-   res.send(ret.rows);
+ //  res.send(ret.rows);
 })
 
 app.get('/book/getById', async (req, res)=>{

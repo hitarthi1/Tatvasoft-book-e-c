@@ -17,10 +17,13 @@ import ValidationErrorMessage from "../../components/ValidationErrorMessage/Vali
 import authService from "../../service/auth/auth.service";
  import { StatusCode } from "./../../constant/constant";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../../context/auth";
+
 
 const Login= () => {
   const classes = loginStyle();
   const history = useHistory();
+  const authContext = useAuthContext();
   const initialValues = {
     email: "",
     password: "",
@@ -37,9 +40,10 @@ const Login= () => {
 
   const onSubmit = (values) => {
     authService.login(values).then((res) => {
-      console.log({ res});
-      console.log(res.status);
+     // console.log({res.re.rows[0]});
+     console.log(res.re.rows[0]);
 
+      authContext.setUsser(res.re.rows[0]);
 
       if (res.status === "authorized") {
         history.push("/");

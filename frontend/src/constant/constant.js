@@ -23,7 +23,8 @@ export const colors = {
 };
 
 export const defaultFilter = {
-    page: 1,
+  //  page: 1,
+    pageIndex: 1,
     pageSize: 10,
     keyword: ""
 }
